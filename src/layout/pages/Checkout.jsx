@@ -1,18 +1,8 @@
-import {
-  // CssBaseline,
-  Paper,
-  Stepper,
-  Step,
-  StepLabel,
-  Typography
-  // CircularProgress,
-  // Divider,
-  // Button
-} from '@mui/material'
+import { Paper, Stepper, Step, StepLabel, Typography } from '@mui/material'
 
 import { useState, useEffect } from 'react'
 import classes from './Checkout.module.css'
-import { AddressForm, PaymentForm, Confirmation } from '../../components'
+import { AddressForm, PaymentForm, OrderConfirmation } from '../../components'
 import commerce from '../../lib/commerce'
 
 const steps = ['Shipping address', 'Payment details']
@@ -70,7 +60,7 @@ export default function Checkout({ cart, onEmptyCart }) {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? <Confirmation /> : <Form />}
+          {activeStep === steps.length ? <OrderConfirmation /> : <Form />}
           {/* instead of <Form/>, can use showForm() as well */}
         </Paper>
       </main>

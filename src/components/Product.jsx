@@ -7,20 +7,23 @@ import {
   IconButton
 } from '@mui/material'
 import { AddShoppingCart } from '@mui/icons-material'
-import classes from './Product.module.css'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import ShareIcon from '@mui/icons-material/Share';
 
 export default function Product({ product, onAddToCart }) {
   return (
-    <Card className={classes.root}>
+    <Card sx={{ maxWidth: '100%' }}>
       <CardMedia
-        className={classes.media}
         image={product.image.url}
         title={product.name}
+        sx={{pt:"56.25%"}}
       />
-      <CardContent>
-        <div className={classes.cardContent}>
-          <Typography variant="h6">{product.name}</Typography>
-          <Typography variant="h6">
+      <CardContent sx={{pl:"30px", pr:"30px", borderBottom:'1px solid lightgrey', height: '190px'}}>
+        <div >
+          <Typography gutterBottom sx={{fontSize: '18px'}}>
+            {product.name}
+          </Typography>
+          <Typography sx={{fontSize: '16px', fontWeight: 'bold', mb:4}}>
             {product.price.formatted_with_symbol}
           </Typography>
         </div>
@@ -28,9 +31,19 @@ export default function Product({ product, onAddToCart }) {
           dangerouslySetInnerHTML={{ __html: product.description }}
           variant="body2"
           color="textSecondary"
+          sx={{ lineHeight: 1.2, margin:0}}
         />
       </CardContent>
-      <CardActions disableSpacing className={classes.cardActions}>
+      <CardActions
+        disableSpacing
+        sx={{ display: 'flex', justifyContent: 'space-between', pl:"30px", pr:"30px" }}
+      >
+        <IconButton aria-label="Add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+        <IconButton aria-label="share" sx={{ml: 2, mr:'auto'}}>
+          <ShareIcon />
+        </IconButton>
         <IconButton
           aria-label="Add to Cart"
           onClick={() => onAddToCart(product.id, 1)}

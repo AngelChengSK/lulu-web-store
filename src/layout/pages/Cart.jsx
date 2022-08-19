@@ -24,7 +24,7 @@ export default function CartPage({
 
   function renderCart() {
     return (
-      <>
+      <section>
         <Grid container spacing={3}>
           {cart.line_items.map((lineItem) => (
             <Grid item xs={12} sm={4} key={lineItem.id}>
@@ -58,7 +58,7 @@ export default function CartPage({
             </Button>
           </div>
         </div>
-      </>
+      </section>
     )
   }
 

@@ -1,19 +1,16 @@
 import { Grid } from '@mui/material'
 import Product from '../../components/Product'
 
-import classes from './Products.module.css'
-
-export default function ProductsPage({products, onAddToCart}) {
+export default function ProductsPage({ products, onAddToCart }) {
   return (
-    <main className={classes.content}>
-      <div className={classes.toolbar} />
-      <Grid container justify="center" spacing={4}>
+    <section>
+      <Grid container justify="center" spacing={4} sx={{ padding: '0 30px 0' }}>
         {products.map((product) => (
-          <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
+          <Grid key={product.id} item xs={12} sm={6} md={4}>
             <Product product={product} onAddToCart={onAddToCart} />
           </Grid>
         ))}
       </Grid>
-    </main>
+    </section>
   )
 }
