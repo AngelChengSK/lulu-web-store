@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom'
 import { Container, Typography, Button, Grid } from '@mui/material'
 import classes from './Cart.module.css'
-import Product from '../../components/Product'
+import CartItem from '../../components/CartItem'
 
-export default function CartPage({ cart }) {
+export default function CartPage({
+  cart,
+  onUpdateCartQty,
+  onRemoveFromCart,
+  onEmptyCart
+}) {
   function renderEmptyCart() {
     return (
       <>
@@ -11,9 +16,7 @@ export default function CartPage({ cart }) {
           You have no items in your shopping cart
         </Typography>
         <Typography>
-          <Link to="/">
-            start adding some
-          </Link>
+          <Link to="/">start adding some</Link>
         </Typography>
       </>
     )
@@ -25,7 +28,7 @@ export default function CartPage({ cart }) {
         <Grid container spacing={3}>
           {cart.line_items.map((lineItem) => (
             <Grid item xs={12} sm={4} key={lineItem.id}>
-              <Product product={lineItem} />
+              <CartItem item={lineItem} onUpdateCartQty={onUpdateCartQty} />
             </Grid>
           ))}
         </Grid>
@@ -39,10 +42,12 @@ export default function CartPage({ cart }) {
               type="button"
               variant="contained"
               color="secondary"
+              onClick={onEmptyCart}
             >
               Empty cart
             </Button>
             <Button
+              component={Link}
               to="/checkout"
               size="large"
               type="button"

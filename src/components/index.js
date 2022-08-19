@@ -1,3 +1,3 @@
-export { default as Navbar } from './navbar/Navbar'
-export { default as Products } from './products/Products'
-export { default as Cart } from './cart/Cart'
+export { default as AddressForm } from './checkout-form/AddressForm'
+export { default as PaymentForm } from './checkout-form/PaymentForm'
+export { default as Confirmation } from './checkout-form/Confirmation'
