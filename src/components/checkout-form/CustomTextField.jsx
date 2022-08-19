@@ -11,7 +11,7 @@ export default function CustomTextField({ name, label }) {
         name={name}
         control={control}
         render={({ field }) => (
-          <TextField {...field} name={name} label={label} required fullWidth />
+          <TextField {...field} name={name} label={label} fullWidth />
         )}
       />
     </Grid>

@@ -64,7 +64,10 @@ function App() {
             />
           }
         ></Route>
-        <Route path="/checkout" element={<Checkout cart={cart} />}></Route>
+        <Route
+          path="/checkout"
+          element={<Checkout cart={cart} onEmptyCart={handleEmptyCart} />}
+        ></Route>
       </Routes>
     </Layout>
   )

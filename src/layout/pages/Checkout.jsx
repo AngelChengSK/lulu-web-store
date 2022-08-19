@@ -17,9 +17,13 @@ import commerce from '../../lib/commerce'
 
 const steps = ['Shipping address', 'Payment details']
 
-export default function Checkout({ cart }) {
+export default function Checkout({ cart, onEmptyCart }) {
   const [activeStep, setActiveStep] = useState(0)
   const [checkoutToken, setCheckoutToken] = useState(null)
+
+  function backStep() {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
 
   function nextStep() {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -42,7 +46,12 @@ export default function Checkout({ cart }) {
     return activeStep === 0 ? (
       <AddressForm checkoutToken={checkoutToken} onNext={nextStep} />
     ) : (
-      <PaymentForm />
+      <PaymentForm
+        checkoutToken={checkoutToken}
+        onNext={nextStep}
+        onBack={backStep}
+        onEmptyCart={onEmptyCart}
+      />
     )
   }
   if (!checkoutToken) return
