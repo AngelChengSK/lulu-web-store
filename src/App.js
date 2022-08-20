@@ -43,6 +43,15 @@ function App() {
     setCart(await commerce.cart.empty())
   }
 
+  function checkInCart(productId) {
+    return cart.line_items.some((item) => item.product_id === productId)
+  }
+
+  function checkInCartQty(productId) {
+    const target = cart.line_items.find((item) => item.product_id === productId)
+    return target.quantity
+  }
+
   if (cart.length === 0 || products.length === 0) return
 
   return (
@@ -51,7 +60,14 @@ function App() {
         <Route
           path="/"
           element={
-            <ProductsPage products={products} onAddToCart={handleAddToCart} />
+            <ProductsPage
+              cart={cart}
+              products={products}
+              onAddToCart={handleAddToCart}
+              onCheckInCart={checkInCart}
+              onCheckInCartQty={checkInCartQty}
+              onRemoveFromCart={handleRemoveFromCart}
+            />
           }
         ></Route>
         <Route path="/favourite" element={<FavouritePage />}></Route>

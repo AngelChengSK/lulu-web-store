@@ -8,7 +8,7 @@ export default function Favourite({ onAddToCart }) {
   const favouriteCtx = useContext(FavouriteContext)
 
   return (
-    <Container sx={{ margin: '100px auto' }}>
+    <Container sx={{ margin: '100px auto', width: '100%' }}>
       <Typography variant="h5" sx={{ mb: '30px' }}>
         Your Favourite(s)
       </Typography>

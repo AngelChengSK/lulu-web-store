@@ -1,26 +1,46 @@
 import { useContext } from 'react'
 import {
+  Box,
   Card,
   CardMedia,
   CardContent,
   CardActions,
   Typography,
-  IconButton
+  IconButton,
+  Button,
+  ButtonGroup
 } from '@mui/material'
 import { AddShoppingCart } from '@mui/icons-material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import ShareIcon from '@mui/icons-material/Share'
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
+import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import { FavouriteContext } from '../store/favourites-context'
 
-export default function Product({ product, onAddToCart }) {
+export default function Product({
+  cart,
+  product,
+  onAddToCart,
+  onCheckInCart,
+  onCheckInCartQty,
+  onRemoveFromCart
+}) {
   const favouriteCtx = useContext(FavouriteContext)
-
   const isFavourite = favouriteCtx.checkIsFavourite(product.id)
+  const isSoldOut = product.is.sold_out
 
   function toggleFavouriteBtn() {
     if (isFavourite) favouriteCtx.removeFavourite(product.id)
     else favouriteCtx.addFavourite(product)
+  }
+
+  function handleReduceQty() {
+    const lineItemId = cart.line_items.find(
+      (item) => item.product_id === product.id
+    ).id
+
+    if (onCheckInCartQty(product.id) === 1) onRemoveFromCart(lineItemId)
+    else onAddToCart(product.id, '-1')
   }
 
   return (
@@ -34,24 +54,24 @@ export default function Product({ product, onAddToCart }) {
         sx={{
           pl: '30px',
           pr: '30px',
-          borderBottom: '1px solid lightgrey',
-          height: '190px'
+          borderBottom: '1px solid lightgrey'
+          // height: '190px'
         }}
       >
-        <div>
+        <Box>
           <Typography gutterBottom sx={{ fontSize: '18px' }}>
             {product.name}
           </Typography>
           <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mb: 4 }}>
             {product.price.formatted_with_symbol}
           </Typography>
-        </div>
-        <Typography
+        </Box>
+        {/* <Typography
           dangerouslySetInnerHTML={{ __html: product.description }}
           variant="body2"
           color="textSecondary"
           sx={{ lineHeight: 1.2, margin: 0 }}
-        />
+        /> */}
       </CardContent>
       <CardActions
         disableSpacing
@@ -69,15 +89,45 @@ export default function Product({ product, onAddToCart }) {
             <FavoriteBorderOutlinedIcon />
           )}
         </IconButton>
-        <IconButton aria-label="share" sx={{ ml: 1, mr: 'auto' }}>
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          aria-label="Add to Cart"
-          onClick={() => onAddToCart(product.id, 1)}
-        >
-          <AddShoppingCart />
-        </IconButton>
+        {isSoldOut ? (
+          <Button variant="contained" disabled>
+            SOLD OUT
+          </Button>
+        ) : onCheckInCart(product.id) ? (
+          <ButtonGroup sx={{ mr: '-17px' }}>
+            <Button
+              variant="text"
+              aria-label="reduce"
+              onClick={handleReduceQty}
+            >
+              <ArrowLeftIcon fontSize="small" />
+            </Button>
+            <Button
+              variant="contained"
+              aria-label="reduce"
+              style={{ borderRadius: '3px' }}
+            >
+              {onCheckInCartQty(product.id)}
+            </Button>
+
+            <Button
+              variant="text"
+              aria-label="increase"
+              onClick={() => onAddToCart(product.id, 1)}
+            >
+              <ArrowRightIcon fontSize="small" />
+            </Button>
+          </ButtonGroup>
+        ) : (
+          <Button
+            variant="outlined"
+            startIcon={<AddShoppingCart />}
+            aria-label="Add to Cart"
+            onClick={() => onAddToCart(product.id, 1)}
+          >
+            Add
+          </Button>
+        )}
       </CardActions>
     </Card>
   )

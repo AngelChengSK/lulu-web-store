@@ -6,8 +6,8 @@ import {
   Badge,
   CssBaseline,
   Typography,
-  Slide,
-  useScrollTrigger,
+  // Slide,
+  // useScrollTrigger,
   InputBase
 } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
@@ -59,76 +59,76 @@ export default function Navbar({ totalItems }) {
     }
   }))
 
-  function HideOnScroll({ children }) {
-    const trigger = useScrollTrigger()
+  // function HideOnScroll({ children }) {
+  //   const trigger = useScrollTrigger()
 
-    return (
-      <Slide appear={false} direction="down" in={!trigger}>
-        {children}
-      </Slide>
-    )
-  }
+  //   return (
+  //     <Slide appear={false} direction="down" in={!trigger}>
+  //       {children}
+  //     </Slide>
+  //   )
+  // }
 
   return (
     <>
       <CssBaseline />
-      <HideOnScroll>
-        <AppBar
-          position="fixed"
-          color="inherit"
-          sx={{ boxShadow: '0 0 5px 4px lightgrey' }}
+      {/* <HideOnScroll> */}
+      <AppBar
+        position="fixed"
+        color="inherit"
+        sx={{ boxShadow: '0 0 5px 4px lightgrey' }}
+      >
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '10px',
+            height: '30px'
+          }}
         >
-          <Toolbar
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: '10px',
-              height: '30px'
-            }}
-          >
-            <Typography component={Link} to="/" sx={{ height: '55%' }}>
-              <img src={logo} alt="logo" height="100%" />
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
+          <Typography component={Link} to="/" sx={{ height: '55%' }}>
+            <img src={logo} alt="logo" height="100%" />
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
 
-            {location.pathname !== '/favourite' && (
-              <IconButton
-                component={Link}
-                to="/favourite"
-                aria-label="Show favourite items"
-                color="inherit"
-              >
-                {FavouriteCtx.favouriteItemsNumber > 0 ? (
-                  <FavoriteIcon />
-                ) : (
-                  <FavoriteBorderOutlinedIcon />
-                )}
-              </IconButton>
-            )}
+          {location.pathname !== '/favourite' && (
+            <IconButton
+              component={Link}
+              to="/favourite"
+              aria-label="Show favourite items"
+              color="inherit"
+            >
+              {FavouriteCtx.favouriteItemsNumber > 0 ? (
+                <FavoriteIcon />
+              ) : (
+                <FavoriteBorderOutlinedIcon />
+              )}
+            </IconButton>
+          )}
 
-            {location.pathname !== '/cart' && (
-              <IconButton
-                component={Link}
-                to="/cart"
-                aria-label="Show cart items"
-                color="inherit"
-              >
-                <Badge badgeContent={totalItems} color="secondary">
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
-            )}
-          </Toolbar>
-        </AppBar>
-      </HideOnScroll>
+          {location.pathname !== '/cart' && (
+            <IconButton
+              component={Link}
+              to="/cart"
+              aria-label="Show cart items"
+              color="inherit"
+            >
+              <Badge badgeContent={totalItems} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          )}
+        </Toolbar>
+      </AppBar>
+      {/* </HideOnScroll> */}
     </>
   )
 }
