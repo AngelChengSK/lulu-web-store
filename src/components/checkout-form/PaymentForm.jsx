@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { Typography, Button, Divider } from '@mui/material'
 import {
   Elements,
@@ -7,6 +8,8 @@ import {
 import { loadStripe } from '@stripe/stripe-js'
 import OrderSummary from './OrderSummary'
 
+import { CheckoutContext } from '../../store/checkout-context'
+
 const stripePromise = loadStripe('/')
 
 export default function PaymentForm({
@@ -15,6 +18,8 @@ export default function PaymentForm({
   onBack,
   onEmptyCart
 }) {
+  const CheckoutCtx = useContext(CheckoutContext)
+
   function handleSubmit() {
     onNext()
     onEmptyCart()
@@ -24,7 +29,11 @@ export default function PaymentForm({
     <>
       <OrderSummary checkoutToken={checkoutToken} />
       <Divider />
-      <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>
+      <Typography
+        variant="h6"
+        gutterBottom
+        style={{ margin: '30px 0 20px', fontWeight: 'bold' }}
+      >
         Payment method
       </Typography>
       <Elements stripe={stripePromise}>
@@ -44,7 +53,13 @@ export default function PaymentForm({
                   color="primary"
                   onClick={handleSubmit}
                 >
-                  Pay {checkoutToken.total.formatted_with_symbol}
+                  Pay{' '}
+                  {(
+                    checkoutToken.total.raw + CheckoutCtx.shippingFee
+                  ).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                  })}
                 </Button>
               </div>
             </form>

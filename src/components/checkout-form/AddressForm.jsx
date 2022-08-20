@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import {
   InputLabel,
   Select,
@@ -12,7 +13,8 @@ import { useForm, FormProvider } from 'react-hook-form'
 import FormInput from './CustomTextField'
 import commerce from '../../lib/commerce'
 import { Link } from 'react-router-dom'
-// import { DriveEtaOutlined } from '@mui/icons-material'
+
+import { CheckoutContext } from '../../store/checkout-context'
 
 export default function AddressForm({ checkoutToken, onNext }) {
   const [nextClicked, setNextClicked] = useState(false)
@@ -23,6 +25,7 @@ export default function AddressForm({ checkoutToken, onNext }) {
   // const [shippingOptions, setShippingOptions] = useState([])
   const [shippingOption, setShippingOption] = useState('')
   const methods = useForm()
+  const CheckoutCtx = useContext(CheckoutContext)
 
   const fetchShippingCountries = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(
@@ -56,6 +59,16 @@ export default function AddressForm({ checkoutToken, onNext }) {
     setShippingOption(options[0])
   }
 
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    setTimeout(() => {
+      onNext()
+      CheckoutCtx.storeShippingCounty(shippingOption.description)
+      CheckoutCtx.storeShippingFee(shippingOption.price.raw)
+    }, 1500)
+  }
+
   useEffect(() => {
     fetchShippingCountries(checkoutToken.id)
   }, [checkoutToken.id])
@@ -81,7 +94,7 @@ export default function AddressForm({ checkoutToken, onNext }) {
         Shipping Address
       </Typography>
       <FormProvider {...methods}>
-        <form onSubmit={onNext}>
+        <form onSubmit={handleSubmit}>
           <Grid container spacing={3}>
             <FormInput
               name="firstName"

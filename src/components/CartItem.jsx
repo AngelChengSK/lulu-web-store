@@ -11,7 +11,6 @@ import {
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
 
 export default function CartItem({ item, onUpdateCartQty, onRemoveFromCart }) {
-  console.log(item)
   return (
     <>
       <Card
