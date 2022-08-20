@@ -6,13 +6,16 @@ import {
   Grid,
   Typography
 } from '@mui/material'
+import Divider from '@mui/material/Divider'
 import { useEffect, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import FormInput from './CustomTextField'
 import commerce from '../../lib/commerce'
 import { Link } from 'react-router-dom'
+// import { DriveEtaOutlined } from '@mui/icons-material'
 
 export default function AddressForm({ checkoutToken, onNext }) {
+  const [nextClicked, setNextClicked] = useState(false)
   const [shippingCountries, setShippingCountries] = useState([])
   const [shippingCountry, setShippingCountry] = useState('')
   const [shippingSubdivisions, setShippingSubdivisions] = useState([])
@@ -73,19 +76,35 @@ export default function AddressForm({ checkoutToken, onNext }) {
   if (!shippingOption) return
 
   return (
-    <>
-      <Typography variant="h6" gutterBottom>
+    <div>
+      <Typography sx={{ fontSize: '18px', margin: '40px 0 20px' }}>
         Shipping Address
       </Typography>
       <FormProvider {...methods}>
         <form onSubmit={onNext}>
           <Grid container spacing={3}>
-            <FormInput name="firstName" label="First name" />
-            <FormInput name="lastName" label="Last name" />
-            <FormInput name="address1" label="Address line 1" />
-            <FormInput name="email" label="Email" />
-            <FormInput name="city" label="City" />
-            <FormInput name="zip" label="Zip / Postal code" />
+            <FormInput
+              name="firstName"
+              label="First name"
+              nextClicked={nextClicked}
+            />
+            <FormInput
+              name="lastName"
+              label="Last name"
+              nextClicked={nextClicked}
+            />
+            <FormInput
+              name="address1"
+              label="Address line 1"
+              nextClicked={nextClicked}
+            />
+            <FormInput name="email" label="Email" nextClicked={nextClicked} />
+            <FormInput name="city" label="City" nextClicked={nextClicked} />
+            <FormInput
+              name="zip"
+              label="Zip / Postal code"
+              nextClicked={nextClicked}
+            />
 
             <Grid item xs={12} sm={6}>
               <InputLabel>Shipping Country</InputLabel>
@@ -117,24 +136,32 @@ export default function AddressForm({ checkoutToken, onNext }) {
               </Select>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <InputLabel>Shipping Fee</InputLabel>
-              <Typography variant="subtitle1" gutterBottom>
-                {`${shippingOption.description} - ${shippingOption.price.formatted_with_symbol}`}
+            <Grid item xs={12}>
+              <Divider sx={{ mb: '20px' }} />
+              <Typography sx={{ mb: '40px' }}>
+                Shipping Fee
+                <span
+                  style={{ float: 'right' }}
+                >{`${shippingOption.description} - ${shippingOption.price.formatted_with_symbol}`}</span>
               </Typography>
             </Grid>
           </Grid>
 
-          <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button component={Link} variant="outlined" to="/cart">
               Back to Cart
             </Button>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              onClick={() => setNextClicked(true)}
+            >
               Next
             </Button>
           </div>
         </form>
       </FormProvider>
-    </>
+    </div>
   )
 }

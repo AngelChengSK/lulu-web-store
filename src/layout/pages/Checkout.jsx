@@ -1,7 +1,13 @@
-import { Paper, Stepper, Step, StepLabel, Typography } from '@mui/material'
+import {
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  Typography,
+  Container
+} from '@mui/material'
 
 import { useState, useEffect } from 'react'
-import classes from './Checkout.module.css'
 import { AddressForm, PaymentForm, OrderConfirmation } from '../../components'
 import commerce from '../../lib/commerce'
 
@@ -47,23 +53,21 @@ export default function Checkout({ cart, onEmptyCart }) {
   if (!checkoutToken) return
 
   return (
-    <>
-      <main className={classes.temp}>
-        <Paper>
-          <Typography variant="h4" align="center">
-            Checkout
-          </Typography>
-          <Stepper activeStep={activeStep}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          {activeStep === steps.length ? <OrderConfirmation /> : <Form />}
-          {/* instead of <Form/>, can use showForm() as well */}
-        </Paper>
-      </main>
-    </>
+    <Container maxWidth="sm">
+      <Paper sx={{ padding: '25px' }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Checkout
+        </Typography>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        {activeStep === steps.length ? <OrderConfirmation /> : <Form />}
+        {/* instead of <Form/>, can use showForm() as well */}
+      </Paper>
+    </Container>
   )
 }
