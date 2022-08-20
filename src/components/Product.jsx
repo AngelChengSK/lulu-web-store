@@ -59,10 +59,13 @@ export default function Product({
         }}
       >
         <Box>
-          <Typography gutterBottom sx={{ fontSize: '18px' }}>
+          <Typography
+            gutterBottom
+            sx={{ fontSize: '17px', fontWeight: 'bold', color: '#686868' }}
+          >
             {product.name}
           </Typography>
-          <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mb: 4 }}>
+          <Typography sx={{ fontSize: '15px', fontWeight: '300' }}>
             {product.price.formatted_with_symbol}
           </Typography>
         </Box>

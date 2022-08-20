@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import {
+  Box,
   Container,
   Typography,
   Button,
@@ -82,14 +83,8 @@ export default function CartPage({
             }}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button
-              size="large"
-              type="button"
-              variant="outlined"
-              color="secondary"
-              onClick={onEmptyCart}
-            >
-              Empty cart
+            <Button component={Link} variant="outlined" to="/">
+              Continue shopping
             </Button>
             <Button
               component={Link}
@@ -109,9 +104,27 @@ export default function CartPage({
 
   return (
     <Container maxWidth="sm" sx={{ margin: '100px auto' }}>
-      <Typography variant="h5" sx={{ mb: '30px' }}>
-        Your Shopping Cart
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: '30px'
+        }}
+      >
+        <Typography variant="h5">Your Shopping Cart</Typography>
+        {cart.total_items !== 0 && (
+          <Button
+            size="small"
+            type="button"
+            variant="outlined"
+            color="secondary"
+            onClick={onEmptyCart}
+          >
+            Empty cart
+          </Button>
+        )}
+      </Box>
       {cart.total_items === 0 ? renderEmptyCart() : renderCart()}
     </Container>
   )

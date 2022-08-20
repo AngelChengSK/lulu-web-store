@@ -1,9 +1,22 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 
 export const FavouriteContext = createContext()
+const LOCAL_STORAGE_KEY = 'lulu_favouriteList'
 
 export default function FavouriteContextProvider(props) {
   const [favouriteList, setFavouriteList] = useState([])
+
+  useEffect(() => {
+    const retrievedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+
+    if (retrievedList) {
+      setFavouriteList(retrievedList)
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(favouriteList))
+  }, [favouriteList])
 
   function handleAddFavourite(product) {
     setFavouriteList((prevState) => {
