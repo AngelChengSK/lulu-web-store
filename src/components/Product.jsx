@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import {
   Card,
   CardMedia,
@@ -8,22 +9,40 @@ import {
 } from '@mui/material'
 import { AddShoppingCart } from '@mui/icons-material'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import ShareIcon from '@mui/icons-material/Share';
+import ShareIcon from '@mui/icons-material/Share'
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
+import { FavouriteContext } from '../store/favourites-context'
 
 export default function Product({ product, onAddToCart }) {
+  const favouriteCtx = useContext(FavouriteContext)
+
+  const isFavourite = favouriteCtx.checkIsFavourite(product.id)
+
+  function toggleFavouriteBtn() {
+    if (isFavourite) favouriteCtx.removeFavourite(product.id)
+    else favouriteCtx.addFavourite(product)
+  }
+
   return (
     <Card sx={{ maxWidth: '100%' }}>
       <CardMedia
         image={product.image.url}
         title={product.name}
-        sx={{pt:"56.25%"}}
+        sx={{ pt: '56.25%' }}
       />
-      <CardContent sx={{pl:"30px", pr:"30px", borderBottom:'1px solid lightgrey', height: '190px'}}>
-        <div >
-          <Typography gutterBottom sx={{fontSize: '18px'}}>
+      <CardContent
+        sx={{
+          pl: '30px',
+          pr: '30px',
+          borderBottom: '1px solid lightgrey',
+          height: '190px'
+        }}
+      >
+        <div>
+          <Typography gutterBottom sx={{ fontSize: '18px' }}>
             {product.name}
           </Typography>
-          <Typography sx={{fontSize: '16px', fontWeight: 'bold', mb:4}}>
+          <Typography sx={{ fontSize: '16px', fontWeight: 'bold', mb: 4 }}>
             {product.price.formatted_with_symbol}
           </Typography>
         </div>
@@ -31,17 +50,26 @@ export default function Product({ product, onAddToCart }) {
           dangerouslySetInnerHTML={{ __html: product.description }}
           variant="body2"
           color="textSecondary"
-          sx={{ lineHeight: 1.2, margin:0}}
+          sx={{ lineHeight: 1.2, margin: 0 }}
         />
       </CardContent>
       <CardActions
         disableSpacing
-        sx={{ display: 'flex', justifyContent: 'space-between', pl:"30px", pr:"30px" }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          pl: '20px',
+          pr: '20px'
+        }}
       >
-        <IconButton aria-label="Add to favorites">
-          <FavoriteIcon />
+        <IconButton aria-label="Add to favorites" onClick={toggleFavouriteBtn}>
+          {isFavourite ? (
+            <FavoriteIcon color="warning" />
+          ) : (
+            <FavoriteBorderOutlinedIcon />
+          )}
         </IconButton>
-        <IconButton aria-label="share" sx={{ml: 2, mr:'auto'}}>
+        <IconButton aria-label="share" sx={{ ml: 1, mr: 'auto' }}>
           <ShareIcon />
         </IconButton>
         <IconButton

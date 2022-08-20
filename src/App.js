@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import commerce from './lib/commerce'
 import ProductsPage from './layout/pages/Products'
+import FavouritePage from './layout/pages/Favourite'
 import CartPage from './layout/pages/Cart'
 import Layout from './layout/Layout'
 import Checkout from './layout/pages/Checkout'
@@ -53,6 +54,7 @@ function App() {
             <ProductsPage products={products} onAddToCart={handleAddToCart} />
           }
         ></Route>
+        <Route path="/favourite" element={<FavouritePage />}></Route>
         <Route
           path="/cart"
           element={

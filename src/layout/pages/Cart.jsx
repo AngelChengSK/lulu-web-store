@@ -108,7 +108,7 @@ export default function CartPage({
   }
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{ margin: '100px auto' }}>
       <Typography variant="h5" sx={{ mb: '30px' }}>
         Your Shopping Cart
       </Typography>

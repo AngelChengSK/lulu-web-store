@@ -53,7 +53,7 @@ export default function Checkout({ cart, onEmptyCart }) {
   if (!checkoutToken) return
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{ margin: '30px auto' }}>
       <Paper sx={{ padding: '25px' }}>
         <Typography variant="h4" align="center" gutterBottom>
           Checkout

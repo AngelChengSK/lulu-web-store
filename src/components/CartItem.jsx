@@ -44,7 +44,7 @@ export default function CartItem({ item, onUpdateCartQty, onRemoveFromCart }) {
           >
             <Typography sx={{ fontSize: '18px' }}>{item.name}</Typography>
             <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
-              {item.price.formatted_with_symbol}
+              {item.line_total.formatted_with_symbol}
             </Typography>
           </CardContent>
           <CardActions
