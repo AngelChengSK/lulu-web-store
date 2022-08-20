@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Container, Typography, Button, Grid } from '@mui/material'
-import classes from './Cart.module.css'
+import { Container, Typography, Button, Grid, Stack } from '@mui/material'
 import CartItem from '../../components/CartItem'
 
 export default function CartPage({
@@ -25,22 +24,49 @@ export default function CartPage({
   function renderCart() {
     return (
       <section>
-        <Grid container spacing={3}>
+        <Stack spacing={3}>
           {cart.line_items.map((lineItem) => (
             <Grid item xs={12} sm={4} key={lineItem.id}>
-              <CartItem item={lineItem} onUpdateCartQty={onUpdateCartQty} />
+              <CartItem
+                item={lineItem}
+                onUpdateCartQty={onUpdateCartQty}
+                onRemoveFromCart={onRemoveFromCart}
+              />
             </Grid>
           ))}
-        </Grid>
-        <div>
-          <Typography variant="h4">
-            Subtotal: {cart.subtotal.formatted_with_symbol}
+        </Stack>
+        <div
+          style={{
+            height: '1px',
+            backgroundColor: 'lightgrey',
+            margin: '30px 0'
+          }}
+        />
+        <div style={{ marginTop: '20px' }}>
+          <Typography variant="subtitle1" gutterBottom>
+            Subtotal:
+            <span style={{ float: 'right', fontWeight: 'bold' }}>
+              {cart.subtotal.formatted_with_symbol}
+            </span>
           </Typography>
-          <div>
+          <Typography variant="subtitle1">
+            Shipping fee:
+            <span style={{ float: 'right', fontWeight: '300' }}>
+              To be determined
+            </span>
+          </Typography>
+          <div
+            style={{
+              height: '1px',
+              backgroundColor: 'lightgrey',
+              margin: '30px 0'
+            }}
+          />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               size="large"
               type="button"
-              variant="contained"
+              variant="outlined"
               color="secondary"
               onClick={onEmptyCart}
             >
@@ -63,8 +89,8 @@ export default function CartPage({
   }
 
   return (
-    <Container className={classes.temp}>
-      <Typography variant="h3" gutterBottom>
+    <Container maxWidth="sm">
+      <Typography variant="h4" sx={{ mb: '30px' }}>
         Your Shopping Cart
       </Typography>
       {cart.total_items === 0 ? renderEmptyCart() : renderCart()}
