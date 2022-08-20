@@ -1,5 +1,14 @@
 import { Link } from 'react-router-dom'
-import { Container, Typography, Button, Grid, Stack } from '@mui/material'
+import {
+  Container,
+  Typography,
+  Button,
+  Grid,
+  Stack,
+  Card,
+  Divider
+} from '@mui/material'
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined'
 import CartItem from '../../components/CartItem'
 
 export default function CartPage({
@@ -10,14 +19,24 @@ export default function CartPage({
 }) {
   function renderEmptyCart() {
     return (
-      <>
-        <Typography variant="subtitle1">
-          You have no items in your shopping cart
+      <Card sx={{ textAlign: 'center', padding: '30px' }}>
+        <LocalMallOutlinedIcon
+          sx={{ fontSize: '80px', margin: '20px 0 30px' }}
+        />
+        <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+          Your cart is empty...
         </Typography>
-        <Typography>
-          <Link to="/">start adding some</Link>
+        <Divider sx={{ margin: '20px 0' }} />
+        <Typography
+          variant="subtitle2"
+          sx={{ fontWeight: 'light', mb: '20px' }}
+        >
+          You have no items in your shopping cart.
         </Typography>
-      </>
+        <Button component={Link} to="/" variant="outlined" type="button">
+          Let's go shopping
+        </Button>
+      </Card>
     )
   }
 
