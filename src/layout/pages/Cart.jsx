@@ -90,7 +90,7 @@ export default function CartPage({
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" sx={{ mb: '30px' }}>
+      <Typography variant="h5" sx={{ mb: '30px' }}>
         Your Shopping Cart
       </Typography>
       {cart.total_items === 0 ? renderEmptyCart() : renderCart()}

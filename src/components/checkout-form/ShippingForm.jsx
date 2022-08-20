@@ -90,8 +90,10 @@ export default function AddressForm({ checkoutToken, onNext }) {
 
   return (
     <div>
-      <Typography sx={{ fontSize: '18px', margin: '40px 0 20px' }}>
-        Shipping Address
+      <Typography
+        sx={{ fontSize: '18px', margin: '40px 0 20px', fontWeight: 'bold' }}
+      >
+        Shipping Information
       </Typography>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit}>
@@ -152,10 +154,10 @@ export default function AddressForm({ checkoutToken, onNext }) {
             <Grid item xs={12}>
               <Divider sx={{ mb: '20px' }} />
               <Typography sx={{ mb: '40px' }}>
-                Shipping Fee
-                <span
-                  style={{ float: 'right' }}
-                >{`${shippingOption.description} - ${shippingOption.price.formatted_with_symbol}`}</span>
+                {`Shipping Fee (${shippingOption.description})`}
+                <span style={{ float: 'right', fontWeight: 'bold' }}>
+                  {shippingOption.price.formatted_with_symbol}
+                </span>
               </Typography>
             </Grid>
           </Grid>

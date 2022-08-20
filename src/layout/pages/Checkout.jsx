@@ -8,10 +8,10 @@ import {
 } from '@mui/material'
 
 import { useState, useEffect } from 'react'
-import { AddressForm, PaymentForm, OrderConfirmation } from '../../components'
+import { ShippingForm, PaymentForm, OrderConfirmation } from '../../components'
 import commerce from '../../lib/commerce'
 
-const steps = ['Shipping address', 'Payment details']
+const steps = ['Shipping details', 'Payment details']
 
 export default function Checkout({ cart, onEmptyCart }) {
   const [activeStep, setActiveStep] = useState(0)
@@ -40,7 +40,7 @@ export default function Checkout({ cart, onEmptyCart }) {
 
   function Form() {
     return activeStep === 0 ? (
-      <AddressForm checkoutToken={checkoutToken} onNext={nextStep} />
+      <ShippingForm checkoutToken={checkoutToken} onNext={nextStep} />
     ) : (
       <PaymentForm
         checkoutToken={checkoutToken}
