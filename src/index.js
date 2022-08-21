@@ -5,14 +5,17 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import CheckoutContextProvider from './store/checkout-context'
 import FavouriteContextProvider from './store/favourites-context'
+import SearchContextProvider from './store/search-context'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <FavouriteContextProvider>
-    <CheckoutContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </CheckoutContextProvider>
-  </FavouriteContextProvider>
+  <BrowserRouter>
+    <SearchContextProvider>
+      <FavouriteContextProvider>
+        <CheckoutContextProvider>
+          <App />
+        </CheckoutContextProvider>
+      </FavouriteContextProvider>
+    </SearchContextProvider>
+  </BrowserRouter>
 )

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import commerce from './lib/commerce'
 import ProductsPage from './layout/pages/Products'
+import SearchPage from './layout/pages/Search'
 import FavouritePage from './layout/pages/Favourite'
 import CartPage from './layout/pages/Cart'
 import Layout from './layout/Layout'
@@ -71,11 +72,28 @@ function App() {
           }
         ></Route>
         <Route
+          path="/search"
+          element={
+            <SearchPage
+              cart={cart}
+              products={products}
+              onAddToCart={handleAddToCart}
+              onCheckInCart={handleCheckInCart}
+              onCheckInCartQty={handleCheckInCartQty}
+              onRemoveFromCart={handleRemoveFromCart}
+            />
+          }
+        ></Route>
+        <Route
           path="/favourite"
           element={
             <FavouritePage
+              cart={cart}
+              products={products}
               onAddToCart={handleAddToCart}
               onCheckInCart={handleCheckInCart}
+              onCheckInCartQty={handleCheckInCartQty}
+              onRemoveFromCart={handleRemoveFromCart}
             />
           }
         ></Route>
