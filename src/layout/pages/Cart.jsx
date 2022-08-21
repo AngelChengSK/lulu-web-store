@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Box,
@@ -11,47 +12,43 @@ import {
 } from '@mui/material'
 import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined'
 import CartItem from '../../components/CartItem'
+import { CartContext } from '../../store/cart-context'
 
-export default function CartPage({
-  cart,
-  onUpdateCartQty,
-  onRemoveFromCart,
-  onEmptyCart
-}) {
+export default function CartPage() {
+  const { cart, onEmptyCart } = useContext(CartContext)
+
   function renderEmptyCart() {
     return (
-      <Card sx={{ textAlign: 'center', padding: '30px' }}>
-        <LocalMallOutlinedIcon
-          sx={{ fontSize: '80px', margin: '20px 0 30px' }}
-        />
-        <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>
-          Your cart is empty...
-        </Typography>
-        <Divider sx={{ margin: '20px 0' }} />
-        <Typography
-          variant="subtitle2"
-          sx={{ fontWeight: 'light', mb: '20px' }}
-        >
-          You have no items in your shopping cart.
-        </Typography>
-        <Button component={Link} to="/" variant="outlined" type="button">
-          Let's go shopping
-        </Button>
-      </Card>
+      <>
+        <Card sx={{ textAlign: 'center', padding: '30px' }}>
+          <LocalMallOutlinedIcon
+            sx={{ fontSize: '80px', margin: '20px 0 30px' }}
+          />
+          <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+            Your cart is empty...
+          </Typography>
+          <Divider sx={{ margin: '20px 0' }} />
+          <Typography
+            variant="subtitle2"
+            sx={{ fontWeight: 'light', mb: '20px' }}
+          >
+            You have no items in your shopping cart.
+          </Typography>
+          <Button component={Link} to="/" variant="outlined" type="button">
+            Let's go shopping
+          </Button>
+        </Card>
+      </>
     )
   }
 
   function renderCart() {
     return (
-      <section>
+      <>
         <Stack spacing={3}>
           {cart.line_items.map((lineItem) => (
             <Grid item xs={12} sm={4} key={lineItem.id}>
-              <CartItem
-                item={lineItem}
-                onUpdateCartQty={onUpdateCartQty}
-                onRemoveFromCart={onRemoveFromCart}
-              />
+              <CartItem item={lineItem} />
             </Grid>
           ))}
         </Stack>
@@ -98,7 +95,7 @@ export default function CartPage({
             </Button>
           </div>
         </div>
-      </section>
+      </>
     )
   }
 

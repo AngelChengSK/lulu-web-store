@@ -9,8 +9,12 @@ import {
   Paper
 } from '@mui/material'
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined'
+import { CartContext } from '../store/cart-context'
+import { useContext } from 'react'
 
-export default function CartItem({ item, onUpdateCartQty, onRemoveFromCart }) {
+export default function CartItem({ item }) {
+  const { onUpdateCartQty, onRemoveFromCart } = useContext(CartContext)
+
   return (
     <>
       <Card

@@ -22,7 +22,6 @@ export default function AddressForm({ checkoutToken, onNext }) {
   const [shippingCountry, setShippingCountry] = useState('')
   const [shippingSubdivisions, setShippingSubdivisions] = useState([])
   const [shippingSubdivision, setShippingSubdivision] = useState('')
-  // const [shippingOptions, setShippingOptions] = useState([])
   const [shippingOption, setShippingOption] = useState('')
   const methods = useForm()
   const CheckoutCtx = useContext(CheckoutContext)
@@ -55,7 +54,6 @@ export default function AddressForm({ checkoutToken, onNext }) {
       { country, region: stateProvince }
     )
 
-    // setShippingOptions(options)
     setShippingOption(options[0])
   }
 
@@ -101,6 +99,7 @@ export default function AddressForm({ checkoutToken, onNext }) {
             <FormInput
               name="firstName"
               label="First name"
+              required
               nextClicked={nextClicked}
             />
             <FormInput

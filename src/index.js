@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 
 import App from './App'
+import CartContextProvider from './store/cart-context'
 import CheckoutContextProvider from './store/checkout-context'
 import FavouriteContextProvider from './store/favourites-context'
 import SearchContextProvider from './store/search-context'
@@ -13,7 +14,9 @@ root.render(
     <SearchContextProvider>
       <FavouriteContextProvider>
         <CheckoutContextProvider>
-          <App />
+          <CartContextProvider>
+            <App />
+          </CartContextProvider>
         </CheckoutContextProvider>
       </FavouriteContextProvider>
     </SearchContextProvider>

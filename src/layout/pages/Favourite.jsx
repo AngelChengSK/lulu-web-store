@@ -4,14 +4,7 @@ import Product from '../../components/Product'
 
 import { FavouriteContext } from '../../store/favourites-context'
 
-export default function Favourite({
-  cart,
-  products,
-  onAddToCart,
-  onCheckInCart,
-  onCheckInCartQty,
-  onRemoveFromCart
-}) {
+export default function Favourite() {
   const favouriteCtx = useContext(FavouriteContext)
 
   return (
@@ -22,14 +15,7 @@ export default function Favourite({
       <Grid container justify="center" spacing={4}>
         {favouriteCtx.favouriteList.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4}>
-            <Product
-              cart={cart}
-              product={product}
-              onAddToCart={onAddToCart}
-              onCheckInCart={onCheckInCart}
-              onCheckInCartQty={onCheckInCartQty}
-              onRemoveFromCart={onRemoveFromCart}
-            />
+            <Product product={product} />
           </Grid>
         ))}
       </Grid>

@@ -16,15 +16,16 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import { FavouriteContext } from '../store/favourites-context'
+import { CartContext } from '../store/cart-context'
 
-export default function Product({
-  cart,
-  product,
-  onAddToCart,
-  onCheckInCart,
-  onCheckInCartQty,
-  onRemoveFromCart
-}) {
+export default function Product({ product }) {
+  const {
+    cart,
+    onAddToCart,
+    onRemoveFromCart,
+    onCheckInCart,
+    onCheckInCartQty
+  } = useContext(CartContext)
   const favouriteCtx = useContext(FavouriteContext)
   const isFavourite = favouriteCtx.checkIsFavourite(product.id)
   const isSoldOut = product.is.sold_out

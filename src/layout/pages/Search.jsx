@@ -4,14 +4,7 @@ import Product from '../../components/Product'
 
 import { SearchContext } from '../../store/search-context'
 
-export default function Search({
-  cart,
-  products,
-  onAddToCart,
-  onCheckInCart,
-  onCheckInCartQty,
-  onRemoveFromCart
-}) {
+export default function Search({ products }) {
   const { searchInput } = useContext(SearchContext)
 
   const searchResult = products.filter(
@@ -29,15 +22,7 @@ export default function Search({
       <Grid container justify="center" spacing={4}>
         {searchResult.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-            <Product
-              key={product.id}
-              cart={cart}
-              product={product}
-              onAddToCart={onAddToCart}
-              onCheckInCart={onCheckInCart}
-              onCheckInCartQty={onCheckInCartQty}
-              onRemoveFromCart={onRemoveFromCart}
-            ></Product>
+            <Product key={product.id} product={product}></Product>
           </Grid>
         ))}
       </Grid>
