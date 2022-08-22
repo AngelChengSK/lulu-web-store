@@ -55,7 +55,7 @@ export default function Navbar({ totalItems }) {
       <AppBar
         position="fixed"
         color="inherit"
-        sx={{ boxShadow: '0 0 5px 4px lightgrey' }}
+        sx={{ boxShadow: '0 0 5px 1px lightgrey' }}
       >
         <Toolbar
           sx={{

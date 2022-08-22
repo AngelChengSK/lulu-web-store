@@ -50,6 +50,7 @@ export default function Checkout({ cart, onEmptyCart }) {
       />
     )
   }
+
   if (!checkoutToken) return
 
   return (
@@ -66,7 +67,6 @@ export default function Checkout({ cart, onEmptyCart }) {
           ))}
         </Stepper>
         {activeStep === steps.length ? <OrderConfirmation /> : <Form />}
-        {/* instead of <Form/>, can use showForm() as well */}
       </Paper>
     </Container>
   )
