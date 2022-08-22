@@ -38,7 +38,6 @@ export default function ProductsPage({ products }) {
       <Splide
         aria-label="popular series"
         options={{
-          arrows: false,
           pagination: false,
           autoplay: true,
           interval: 5000,

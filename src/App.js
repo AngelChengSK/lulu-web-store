@@ -1,16 +1,14 @@
 import { useState, useEffect, useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
-
 import commerce from './lib/commerce'
-
-import ProductsPage from './layout/pages/Products'
-import SearchPage from './layout/pages/Search'
-import FavouritePage from './layout/pages/Favourite'
-import CartPage from './layout/pages/Cart'
-
+import {
+  ProductsPage,
+  SearchPage,
+  FavouritePage,
+  CartPage,
+  CheckoutPage
+} from './layout/pages'
 import Layout from './layout/Layout'
-import Checkout from './layout/pages/Checkout'
-
 import { CartContext } from './store/cart-context'
 
 function App() {
@@ -36,11 +34,14 @@ function App() {
           path="/search"
           element={<SearchPage products={products} />}
         ></Route>
-        <Route path="/favourite" element={<FavouritePage />}></Route>
-        <Route path="/cart" element={<CartPage />}></Route>
+        <Route
+          path="/favourite"
+          element={<FavouritePage products={products} />}
+        ></Route>
+        <Route path="/cart" element={<CartPage products={products} />}></Route>
         <Route
           path="/checkout"
-          element={<Checkout cart={cart} onEmptyCart={onEmptyCart} />}
+          element={<CheckoutPage cart={cart} onEmptyCart={onEmptyCart} />}
         ></Route>
       </Routes>
     </Layout>

@@ -14,7 +14,7 @@ import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined'
 import CartItem from '../../components/CartItem'
 import { CartContext } from '../../store/cart-context'
 
-export default function CartPage() {
+export default function CartPage({ products }) {
   const { cart, onEmptyCart } = useContext(CartContext)
 
   function renderEmptyCart() {

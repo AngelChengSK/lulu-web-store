@@ -45,7 +45,7 @@ export default function Product({ product }) {
   }
 
   return (
-    <Card sx={{ maxWidth: '100%' }}>
+    <Card sx={{ maxWidth: '100%', margin: '2px' }}>
       <CardMedia
         image={product.image.url}
         title={product.name}
