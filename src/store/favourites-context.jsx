@@ -30,6 +30,10 @@ export default function FavouriteContextProvider(props) {
     })
   }
 
+  function handleEmptyFavourites() {
+    setFavouriteList([])
+  }
+
   function handleCheckFavourite(productId) {
     // console.log(favouriteList)
     if (favouriteList.length === 0) return false
@@ -41,7 +45,8 @@ export default function FavouriteContextProvider(props) {
     favouriteItemsNumber: favouriteList.length,
     addFavourite: handleAddFavourite,
     removeFavourite: handleRemoveFavourite,
-    checkIsFavourite: handleCheckFavourite
+    checkIsFavourite: handleCheckFavourite,
+    emptyFavourites: handleEmptyFavourites
   }
 
   return (

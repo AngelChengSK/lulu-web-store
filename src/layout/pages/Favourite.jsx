@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Grid, Container, Typography } from '@mui/material'
+import { Grid, Container, Typography, Button, Box } from '@mui/material'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 
 import Product from '../../components/Product'
@@ -8,7 +8,7 @@ import { FavouriteContext } from '../../store/favourites-context'
 import Suggestion from '../../components/Suggestion'
 
 export default function Favourite({ products }) {
-  const { favouriteList } = useContext(FavouriteContext)
+  const { favouriteList, emptyFavourites } = useContext(FavouriteContext)
 
   function renderFavourite() {
     return (
@@ -38,9 +38,27 @@ export default function Favourite({ products }) {
 
   return (
     <Container sx={{ margin: '100px auto', width: '100%' }}>
-      <Typography variant="h5" sx={{ mb: '30px' }}>
-        Your Favourite(s)
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: '30px'
+        }}
+      >
+        <Typography variant="h5">Your Favourite(s)</Typography>
+        {favouriteList.length > 0 && (
+          <Button
+            size="small"
+            type="button"
+            variant="outlined"
+            color="secondary"
+            onClick={emptyFavourites}
+          >
+            Empty Favourites
+          </Button>
+        )}
+      </Box>
       {favouriteList.length > 0 ? renderFavourite() : renderEmptyFavourite()}
       <Suggestion products={products} listToExculde={favouriteList} />
     </Container>

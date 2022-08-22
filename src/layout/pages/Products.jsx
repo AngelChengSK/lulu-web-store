@@ -9,6 +9,7 @@ import {
 import Product from '../../components/Product'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
+import classes from './Products.module.css'
 
 // import logo from '../../images/logo.jpg'
 import photo1 from '../../images/gallery_1.jpg'
@@ -17,31 +18,19 @@ import photo2 from '../../images/gallery_2.jpg'
 export default function ProductsPage({ products }) {
   return (
     <Container sx={{ margin: '120px auto' }}>
-      {/* <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <img
-          src={logo}
-          alt="logo"
-          style={{
-            height: '120px',
-            filter: 'opacity(0.6) drop-shadow(0 0 0 blue)'
-          }}
-        />
-        <Typography variant="h2" gutterBottom>Lulu The Piggy</Typography>
-      </Box> */}
       <Splide
+        className={classes.hideInMobile}
         aria-label="popular series"
         options={{
           pagination: false,
           autoplay: true,
           interval: 5000,
-          pauseOnHover: true
+          pauseOnHover: true,
+          breakpoints: {
+            850: {
+              arrows: false
+            }
+          }
         }}
       >
         <SplideSlide>
@@ -53,7 +42,10 @@ export default function ProductsPage({ products }) {
               height="500"
               image={photo1}
               alt="original series 2"
-              sx={{ borderRadius: '15px' }}
+              sx={{
+                borderRadius: '15px'
+                // display: { lg: 'block', sm: 'none', xs: 'none' }
+              }}
             />
           </Card>
         </SplideSlide>
@@ -66,7 +58,10 @@ export default function ProductsPage({ products }) {
               height="500"
               image={photo2}
               alt="journey to the west series"
-              sx={{ borderRadius: '15px' }}
+              sx={{
+                borderRadius: '15px'
+                // display: { lg: 'block', sm: 'none', xs: 'none' }
+              }}
             />
           </Card>
         </SplideSlide>

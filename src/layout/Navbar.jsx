@@ -6,8 +6,6 @@ import {
   Badge,
   CssBaseline,
   Typography,
-  // Slide,
-  // useScrollTrigger,
   InputBase,
   Box
 } from '@mui/material'
@@ -20,9 +18,9 @@ import { alpha } from '@mui/material/styles'
 import { grey } from '@mui/material/colors'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import logo from '../../images/word-logo.jpg'
-import { FavouriteContext } from '../../store/favourites-context'
-import { SearchContext } from '../../store/search-context'
+import logo from '../images/word-logo.jpg'
+import { FavouriteContext } from '../store/favourites-context'
+import { SearchContext } from '../store/search-context'
 
 export default function Navbar({ totalItems }) {
   const location = useLocation()
@@ -61,7 +59,7 @@ export default function Navbar({ totalItems }) {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            gap: '10px',
+            gap: '7px',
             height: '30px'
           }}
         >
@@ -70,6 +68,7 @@ export default function Navbar({ totalItems }) {
             to="/"
             sx={{
               height: '55%',
+              mr: '5px',
               '&:hover': {
                 opacity: '0.7'
               }
@@ -88,7 +87,7 @@ export default function Navbar({ totalItems }) {
                 backgroundColor: alpha(grey[400], 0.2)
               },
               marginLeft: 'auto',
-              marginRight: '10px'
+              marginRight: '7px'
             }}
           >
             <Box
@@ -129,7 +128,7 @@ export default function Navbar({ totalItems }) {
               <IconButton
                 aria-label="clear"
                 size="small"
-                sx={{ mr: '10px' }}
+                sx={{ mr: '10px', position: 'absolute', top: '5px', right: 0 }}
                 onClick={handleClearSearch}
               >
                 <ClearIcon fontSize="small" />
