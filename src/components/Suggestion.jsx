@@ -1,13 +1,9 @@
-// import { useContext } from 'react'
 import { Box, Typography } from '@mui/material'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
 import Product from '../components/Product'
-// import { FavouriteContext } from '../store/favourites-context'
 
 export default function Suggestion({ products, listToExculde }) {
-  // const { favouriteList } = useContext(FavouriteContext)
-
   const productIdToExclude = listToExculde.map((item) => item.id)
   const suggestionList = products.filter(
     (item) => !productIdToExclude.includes(item.id)
