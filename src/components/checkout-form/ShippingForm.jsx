@@ -173,7 +173,7 @@ export default function AddressForm({ checkoutToken, onNext }) {
                 </Grid>
               </Grid>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button component={Link} variant="outlined" to="/cart">
                   Back to Cart
                 </Button>
@@ -185,7 +185,7 @@ export default function AddressForm({ checkoutToken, onNext }) {
                 >
                   Next
                 </Button>
-              </div>
+              </Box>
             </form>
           </FormProvider>
         </>

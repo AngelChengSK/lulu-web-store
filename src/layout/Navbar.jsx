@@ -14,6 +14,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { alpha } from '@mui/material/styles'
 import { grey } from '@mui/material/colors'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -142,7 +143,6 @@ export default function Navbar({ totalItems }) {
               to="/favourite"
               aria-label="Show favourite items"
               color="inherit"
-              onClick={handleClearSearch}
             >
               {favouriteItemsNumber > 0 ? (
                 <FavoriteIcon />
@@ -151,13 +151,22 @@ export default function Navbar({ totalItems }) {
               )}
             </IconButton>
           )}
+
+          <IconButton
+            component={Link}
+            to="/profile"
+            aria-label="login"
+            color="inherit"
+          >
+            <AccountCircleIcon sx={{ fontSize: '27px' }} />
+          </IconButton>
+
           {location.pathname !== '/cart' && (
             <IconButton
               component={Link}
               to="/cart"
               aria-label="Show cart items"
               color="inherit"
-              onClick={handleClearSearch}
             >
               <Badge badgeContent={totalItems} color="secondary">
                 <ShoppingCartIcon />

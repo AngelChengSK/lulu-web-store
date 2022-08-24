@@ -6,8 +6,11 @@ import {
   SearchPage,
   FavouritePage,
   CartPage,
-  CheckoutPage
-} from './layout/pages'
+  CheckoutPage,
+  ProfilePage,
+  LoginPage,
+  SignUpPage
+} from './pages'
 import Layout from './layout/Layout'
 import { CartContext } from './store/cart-context'
 
@@ -43,6 +46,9 @@ function App() {
           path="/checkout"
           element={<CheckoutPage cart={cart} onEmptyCart={onEmptyCart} />}
         ></Route>
+        <Route path="/profile" element={<ProfilePage />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/signup" element={<SignUpPage />}></Route>
       </Routes>
     </Layout>
   )

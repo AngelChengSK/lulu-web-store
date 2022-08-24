@@ -2,10 +2,10 @@ import { useContext } from 'react'
 import { Grid, Container, Typography, Button, Box } from '@mui/material'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 
-import Product from '../../components/Product'
+import Product from '../components/Product'
 
-import { FavouriteContext } from '../../store/favourites-context'
-import Suggestion from '../../components/Suggestion'
+import { FavouriteContext } from '../store/favourites-context'
+import Suggestion from '../components/Suggestion'
 
 export default function Favourite({ products }) {
   const { favouriteList, emptyFavourites } = useContext(FavouriteContext)

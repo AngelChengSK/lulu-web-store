@@ -7,18 +7,21 @@ import CartContextProvider from './store/cart-context'
 import CheckoutContextProvider from './store/checkout-context'
 import FavouriteContextProvider from './store/favourites-context'
 import SearchContextProvider from './store/search-context'
+import AuthContextProvider from './store/auth-context'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <BrowserRouter>
-    <SearchContextProvider>
-      <FavouriteContextProvider>
-        <CheckoutContextProvider>
-          <CartContextProvider>
-            <App />
-          </CartContextProvider>
-        </CheckoutContextProvider>
-      </FavouriteContextProvider>
-    </SearchContextProvider>
+    <AuthContextProvider>
+      <SearchContextProvider>
+        <FavouriteContextProvider>
+          <CheckoutContextProvider>
+            <CartContextProvider>
+              <App />
+            </CartContextProvider>
+          </CheckoutContextProvider>
+        </FavouriteContextProvider>
+      </SearchContextProvider>
+    </AuthContextProvider>
   </BrowserRouter>
 )

@@ -6,14 +6,14 @@ import {
   // Box,
   // Typography
 } from '@mui/material'
-import Product from '../../components/Product'
+import Product from '../components/Product'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
 import classes from './Products.module.css'
 
-// import logo from '../../images/logo.jpg'
-import photo1 from '../../images/gallery_1.jpg'
-import photo2 from '../../images/gallery_2.jpg'
+// import logo from '../images/logo.jpg'
+import photo1 from '../images/gallery_1.jpg'
+import photo2 from '../images/gallery_2.jpg'
 
 export default function ProductsPage({ products }) {
   return (

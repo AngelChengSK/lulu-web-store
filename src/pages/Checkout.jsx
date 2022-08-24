@@ -8,8 +8,8 @@ import {
 } from '@mui/material'
 
 import { useState, useEffect } from 'react'
-import { ShippingForm, PaymentForm, OrderConfirmation } from '../../components'
-import commerce from '../../lib/commerce'
+import { ShippingForm, PaymentForm, OrderConfirmation } from '../components'
+import commerce from '../lib/commerce'
 
 const steps = ['Shipping details', 'Payment details']
 
