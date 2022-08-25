@@ -16,6 +16,7 @@ import {
   OutlinedInput
 } from '@mui/material'
 import GoogleIcon from '@mui/icons-material/Google'
+import FacebookIcon from '@mui/icons-material/Facebook'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
@@ -172,13 +173,18 @@ export default function Login() {
         <Divider>OR</Divider>
         <Box>
           <IconButton
+            disabled
             aria-label="login with Google"
             color="inherit"
             onClick={handleSignInWithGoogle}
           >
             <GoogleIcon />
           </IconButton>
+          <IconButton disabled aria-label="login with Facebook" color="inherit">
+            <FacebookIcon />
+          </IconButton>
         </Box>
+
         <Typography>
           Need an account?
           <Button component={Link} to="/signup">

@@ -1,4 +1,4 @@
-import { Card, Container, Button } from '@mui/material'
+import { Card, Container, Button, Typography } from '@mui/material'
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../store/auth-context'
@@ -25,7 +25,7 @@ export default function UserMenu() {
           gap: '10px'
         }}
       >
-        <div>{user.email}</div>
+        <Typography>Welcome, {user.email.split('@')[0]}</Typography>
         <Button
           component={Link}
           to="/profile"

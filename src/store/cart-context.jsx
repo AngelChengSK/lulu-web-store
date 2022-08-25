@@ -19,10 +19,9 @@ export default function ProductsContextProvider(props) {
 
   useEffect(() => {
     let retrievedCartId = null
-    console.log(user)
+
     if (user) {
       retrievedCartId = getSingleUserData(user.uid).cart_id
-      console.log(retrievedCartId)
     } else {
       retrievedCartId = JSON.parse(localStorage.getItem('lulu_cartId'))
     }
@@ -49,7 +48,6 @@ export default function ProductsContextProvider(props) {
   }
 
   async function fetchNewCart() {
-    console.log('hi')
     setCart(await commerce.cart.refresh())
   }
 

@@ -1,14 +1,17 @@
 import { useState, useContext, useEffect } from 'react'
-import { Card, Container } from '@mui/material'
+import { Card, Container, TextField, Button, Typography } from '@mui/material'
 import { AuthContext } from '../store/auth-context'
 import { FirestoreContext } from '../store/firestore-context'
 import { doc, setDoc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { collection, getDocs } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
+import { TextFieldsTwoTone } from '@mui/icons-material'
 
 export default function Profile() {
+  const [loading, setLoading] = useState(true)
   const [currentUserData, setCurrentUserData] = useState([])
+  const [enableEdit, setEnableEdit] = useState(false)
   const [values, setValues] = useState([])
   const { user, handleDeleteAuth } = useContext(AuthContext)
   const { getSingleUserData, handleSetDoc } = useContext(FirestoreContext)
@@ -19,7 +22,9 @@ export default function Profile() {
   }, [user])
 
   useEffect(() => {
-    if (currentUserData) setValues(currentUserData)
+    if (currentUserData) {
+      setValues(currentUserData)
+    }
   }, [currentUserData])
 
   async function getCurrentUserData() {
@@ -49,6 +54,14 @@ export default function Profile() {
 
   function handleUpdateProfile() {
     handleSetDoc(user.uid, values)
+
+    setEnableEdit(false)
+  }
+
+  function handleCancelEdit() {
+    getCurrentUserData()
+    setValues(currentUserData)
+    setEnableEdit(false)
   }
 
   function handleInput(e) {
@@ -70,41 +83,81 @@ export default function Profile() {
           gap: '20px'
         }}
       >
-        <div>{`hello, ${user.email}`}</div>
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+          Your Profile
+        </Typography>
 
-        <div>
-          <label htmlFor="firstname">First Name</label>
-          <input
-            id="firstname"
-            type="text"
-            value={values.firstname || ''}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <label htmlFor="lastname">Last Name</label>
-          <input
-            id="lastname"
-            type="text"
-            value={values.lastname || ''}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input id="email" type="text" value={values.email || ''} disabled />
-        </div>
-        <div>
-          <label htmlFor="phone">Phone</label>
-          <input
-            id="phone"
-            type="text"
-            value={values.phone || ''}
-            onChange={handleInput}
-          />
-        </div>
-        <button onClick={handleUpdateProfile}>update profile</button>
-        <button onClick={handleDeleteAccount}>delete account</button>
+        <TextField
+          disabled={!enableEdit}
+          variant="standard"
+          id="firstname"
+          label="First Name"
+          InputLabelProps={{
+            shrink: true
+          }}
+          value={values.firstname || ''}
+          onChange={handleInput}
+        />
+        <TextField
+          disabled={!enableEdit}
+          variant="standard"
+          id="lastname"
+          label="Last Name"
+          InputLabelProps={{
+            shrink: true
+          }}
+          value={values.lastname || ''}
+          onChange={handleInput}
+        />
+        <TextField
+          disabled
+          variant="standard"
+          id="email"
+          label="Email"
+          InputLabelProps={{
+            shrink: true
+          }}
+          value={values.email || ''}
+        />
+        <TextField
+          disabled={!enableEdit}
+          variant="standard"
+          id="phone"
+          label="Phone"
+          InputLabelProps={{
+            shrink: true
+          }}
+          value={values.phone || ''}
+          onChange={handleInput}
+        />
+
+        {enableEdit ? (
+          <>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleUpdateProfile}
+            >
+              save
+            </Button>
+            <Button variant="outlined" color="error" onClick={handleCancelEdit}>
+              cancel
+            </Button>
+          </>
+        ) : (
+          <Button variant="contained" onClick={() => setEnableEdit(true)}>
+            edit profile
+          </Button>
+        )}
+        {!enableEdit && (
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={handleDeleteAccount}
+          >
+            delete account
+          </Button>
+        )}
       </Card>
     </Container>
   )
