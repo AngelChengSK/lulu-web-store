@@ -55,7 +55,9 @@ export default function SignUp() {
         values.password
       )
       await setDoc(doc(db, 'users', res.user.uid), {
-        email: values.email
+        email: values.email,
+        favourites: [],
+        cart: []
       })
     } catch (error) {
       setError(

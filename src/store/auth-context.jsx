@@ -7,19 +7,22 @@ export const AuthContext = createContext()
 
 export default function AuthContextProvider(props) {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setUser(user)
-      navigate('/profile')
+    onAuthStateChanged(auth, (user_) => {
+      setUser(user_)
+      setLoading(false)
+      if (user) navigate('/profile')
     })
-  }, [])
+  }, [user])
 
   function handleLogout() {
     signOut(auth)
       .then(() => {
         setUser(null)
+        setLoading(false)
         navigate('/')
       })
       .catch((error) => {
@@ -32,6 +35,7 @@ export default function AuthContextProvider(props) {
 
     deleteUser(user)
       .then(() => {
+        setLoading(false)
         navigate('/login')
       })
       .catch((error) => {
@@ -45,6 +49,8 @@ export default function AuthContextProvider(props) {
     handleLogout: handleLogout,
     handleDeleteAuth: handleDelete
   }
+
+  if (loading) return
 
   return (
     <AuthContext.Provider value={dataToShare}>

@@ -7,6 +7,7 @@ export const FirestoreContext = createContext()
 
 export default function FirestoreContextProvider(props) {
   const [userMasterList, setUserMasterList] = useState()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchData()
@@ -22,24 +23,29 @@ export default function FirestoreContextProvider(props) {
       })
 
       setUserMasterList(userList)
+      setLoading(false)
     } catch (err) {
       console.log(err)
     }
   }
 
+  function getSingleUserData(userId) {
+    return userMasterList.find((record) => record.id === userId)
+  }
+
   async function handleSetDoc(userId, newDataObject) {
-    await setDoc(doc(db, 'users', userId), {
-      ...newDataObject
-    })
+    await setDoc(doc(db, 'users', userId), newDataObject)
     fetchData()
   }
 
   const dataToShare = {
     userMasterList: userMasterList,
-    handleSetDoc: handleSetDoc
+    handleSetDoc: handleSetDoc,
+    getSingleUserData: getSingleUserData
   }
 
-  if (!userMasterList) return
+  // if (!userMasterList) return
+  if (loading) return
 
   return (
     <FirestoreContext.Provider value={dataToShare}>

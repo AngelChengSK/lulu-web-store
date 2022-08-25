@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import {
@@ -26,6 +26,9 @@ import {
   onAuthStateChanged
 } from 'firebase/auth'
 import { auth } from '../firebase'
+import { doc, setDoc, deleteDoc } from 'firebase/firestore'
+import { db } from '../firebase'
+import { AuthContext } from '../store/auth-context'
 
 export default function Login() {
   const [values, setValues] = useState({
@@ -35,6 +38,7 @@ export default function Login() {
   })
   const [error, setError] = useState(null)
   const navigate = useNavigate()
+  const { user, handleDeleteAuth } = useContext(AuthContext)
 
   const providerGoogle = new GoogleAuthProvider()
 
@@ -69,6 +73,19 @@ export default function Login() {
         )
       })
   }
+
+  async function handleSignInWithGoogle() {
+    signInWithRedirect(auth, providerGoogle)
+
+    await setDoc(doc(db, 'users', user.uid), {
+      email: user.email,
+      favourites: [],
+      cart: []
+    })
+  }
+  // sign in with google will break the app,
+  // when first logged in, auth will create a copy of google account details which then change the user state, but in firestore, no account record has been created yet,
+  // as the user state is vaild/ true after google login, favourite-context will try to read user data from database, but that data has not yet created
 
   return (
     <Container maxWidth="xs" sx={{ margin: '100px auto' }}>
@@ -157,7 +174,7 @@ export default function Login() {
           <IconButton
             aria-label="login with Google"
             color="inherit"
-            onClick={() => signInWithRedirect(auth, providerGoogle)}
+            onClick={handleSignInWithGoogle}
           >
             <GoogleIcon />
           </IconButton>

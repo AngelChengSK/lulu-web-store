@@ -11,37 +11,40 @@ export default function Profile() {
   const [currentUserData, setCurrentUserData] = useState([])
   const [values, setValues] = useState([])
   const { user, handleDeleteAuth } = useContext(AuthContext)
-  const { userMasterList, handleSetDoc } = useContext(FirestoreContext)
+  const { getSingleUserData, handleSetDoc } = useContext(FirestoreContext)
   const navigate = useNavigate()
 
   useEffect(() => {
-    getCurrentUserData()
-  }, [])
+    if (user) getCurrentUserData()
+  }, [user])
 
   useEffect(() => {
     if (currentUserData) setValues(currentUserData)
   }, [currentUserData])
 
   async function getCurrentUserData() {
-    const targetRecord = userMasterList.find((record) => record.id === user.uid)
+    const targetRecord = getSingleUserData(user.uid)
 
-    // create record in db for google user who log in for the first time
-    if (!targetRecord) {
-      await setDoc(doc(db, 'users', user.uid), {
-        displayName: user.displayName,
-        email: user.email
-      })
-      // refresh the page to load the db again
-      window.location.reload(false)
-    }
+    // // create record in db for google user who log in for the first time
+    // if (!targetRecord) {
+    //   await setDoc(doc(db, 'users', user.uid), {
+    //     displayName: user.displayName,
+    //     email: user.email,
+    //     favourites: [],
+    //     cart: []
+    //   })
+    //   // refresh the page to load the db again
+    //   window.location.reload(false)
+    // }
 
     setCurrentUserData(targetRecord)
   }
 
   async function handleDeleteAccount() {
     await deleteDoc(doc(db, 'users', user.uid))
-    setCurrentUserData(null)
+    setCurrentUserData([])
     handleDeleteAuth()
+    navigate('/login')
   }
 
   function handleUpdateProfile() {

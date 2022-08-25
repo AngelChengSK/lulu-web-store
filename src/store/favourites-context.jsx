@@ -1,22 +1,38 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../store/auth-context'
+import { FirestoreContext } from '../store/firestore-context'
 
 export const FavouriteContext = createContext()
 const LOCAL_STORAGE_KEY = 'lulu_favouriteList'
 
 export default function FavouriteContextProvider(props) {
   const [favouriteList, setFavouriteList] = useState([])
+  const { user } = useContext(AuthContext)
+  const { handleSetDoc, getSingleUserData } = useContext(FirestoreContext)
 
   useEffect(() => {
-    const retrievedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+    let retrievedList = []
+    if (user) {
+      retrievedList = getSingleUserData(user.uid).favourites
+    } else {
+      retrievedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+    }
 
     if (retrievedList) {
       setFavouriteList(retrievedList)
     }
-  }, [])
+  }, [user])
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(favouriteList))
-  }, [favouriteList])
+    if (user) {
+      const singleUserRecord = getSingleUserData(user.uid)
+      const newRecordObject = { ...singleUserRecord, favourites: favouriteList }
+
+      handleSetDoc(user.uid, newRecordObject)
+    } else {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(favouriteList))
+    }
+  }, [user, favouriteList])
 
   function handleAddFavourite(product) {
     setFavouriteList((prevState) => {
@@ -35,7 +51,6 @@ export default function FavouriteContextProvider(props) {
   }
 
   function handleCheckFavourite(productId) {
-    // console.log(favouriteList)
     if (favouriteList.length === 0) return false
     return favouriteList.some((item) => item.id === productId)
   }
