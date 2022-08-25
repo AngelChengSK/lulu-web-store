@@ -1,17 +1,56 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useContext } from 'react'
+import { AuthContext } from '../store/auth-context'
+import { FirestoreContext } from '../store/firestore-context'
 import commerce from '../lib/commerce'
 
 export const CartContext = createContext()
+const LOCAL_STORAGE_KEY = 'lulu_cart_id'
 
 export default function ProductsContextProvider(props) {
   const [cart, setCart] = useState([])
+  const [newCartId, setNewCartId] = useState('')
+  const { user } = useContext(AuthContext)
+  const { handleSetDoc, getSingleUserData } = useContext(FirestoreContext)
+
+  // console.log(cart)
+  // useEffect(() => {
+  //   fetchCart()
+  // }, [])
 
   useEffect(() => {
-    fetchCart()
-  }, [])
+    let retrievedCartId = null
+    console.log(user)
+    if (user) {
+      retrievedCartId = getSingleUserData(user.uid).cart_id
+      console.log(retrievedCartId)
+    } else {
+      retrievedCartId = JSON.parse(localStorage.getItem('lulu_cartId'))
+    }
 
-  async function fetchCart() {
-    setCart(await commerce.cart.retrieve())
+    if (retrievedCartId) fetchCart(retrievedCartId)
+    else fetchNewCart()
+  }, [user])
+
+  useEffect(() => {
+    if (cart.id) {
+      if (user) {
+        const singleUserRecord = getSingleUserData(user.uid)
+        const newRecordObject = { ...singleUserRecord, cart_id: cart.id }
+
+        handleSetDoc(user.uid, newRecordObject)
+      } else {
+        localStorage.setItem('lulu_cartId', JSON.stringify(cart.id))
+      }
+    }
+  }, [cart.id, user])
+
+  async function fetchCart(cart_id) {
+    setCart(await commerce.cart.retrieve(cart_id))
+  }
+
+  async function fetchNewCart() {
+    console.log('hi')
+    setCart(await commerce.cart.refresh())
   }
 
   async function handleAddToCart(productId, quantity) {
