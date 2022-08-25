@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
-import { onAuthStateChanged, signOut } from 'firebase/auth'
+import { onAuthStateChanged, signOut, deleteUser } from 'firebase/auth'
 import { auth } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,17 +12,27 @@ export default function AuthContextProvider(props) {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user)
-
-      // if (user) {
-      //   navigate('/')
-      // }
+      navigate('/profile')
     })
-  }, [navigate, user])
+  }, [])
 
   function handleLogout() {
     signOut(auth)
       .then(() => {
         setUser(null)
+        navigate('/')
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
+  }
+
+  function handleDelete() {
+    const user = auth.currentUser
+
+    deleteUser(user)
+      .then(() => {
+        navigate('/login')
       })
       .catch((error) => {
         console.log(error.message)
@@ -32,7 +42,8 @@ export default function AuthContextProvider(props) {
   const dataToShare = {
     user: user,
     setUser: setUser,
-    handleLogout: handleLogout
+    handleLogout: handleLogout,
+    handleDeleteAuth: handleDelete
   }
 
   return (

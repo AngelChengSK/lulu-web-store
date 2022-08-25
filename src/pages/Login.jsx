@@ -43,10 +43,10 @@ export default function Login() {
   }
 
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
+    setValues((prevValues) => ({
+      ...prevValues,
       showPassword: !values.showPassword
-    })
+    }))
   }
 
   const handleMouseDownPassword = (event) => {
@@ -59,7 +59,6 @@ export default function Login() {
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then((userCredential) => {
         // const user = userCredential.user
-        navigate('/')
       })
       .catch((error) => {
         setError(
@@ -70,13 +69,6 @@ export default function Login() {
         )
       })
   }
-
-  //if successfull login with Google, redirect to homepage
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      navigate('/')
-    }
-  })
 
   return (
     <Container maxWidth="xs" sx={{ margin: '100px auto' }}>

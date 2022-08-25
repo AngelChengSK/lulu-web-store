@@ -16,12 +16,13 @@ import {
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
-import { auth } from '../firebase'
+import { auth, db } from '../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { serverTimestamp, doc, setDoc } from 'firebase/firestore'
 
 export default function SignUp() {
   const [error, setError] = useState(null)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const [values, setValues] = useState({
     email: '',
@@ -44,24 +45,26 @@ export default function SignUp() {
     event.preventDefault()
   }
 
-  function handleSignUp(e) {
+  async function handleSignUp(e) {
     e.preventDefault()
 
-    createUserWithEmailAndPassword(auth, values.email, values.password)
-      .then((userCredential) => {
-        const user = userCredential.user
-        if (user) {
-          navigate('/login')
-        }
+    try {
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      )
+      await setDoc(doc(db, 'users', res.user.uid), {
+        email: values.email
       })
-      .catch((error) => {
-        setError(
-          error.message.substring(
-            error.message.indexOf(':') + 2,
-            error.message.length - 1
-          )
+    } catch (error) {
+      setError(
+        error.message.substring(
+          error.message.indexOf(':') + 2,
+          error.message.length - 1
         )
-      })
+      )
+    }
   }
 
   return (
