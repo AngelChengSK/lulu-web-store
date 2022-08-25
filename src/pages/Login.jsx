@@ -22,7 +22,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   GoogleAuthProvider,
   signInWithRedirect,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  onAuthStateChanged
 } from 'firebase/auth'
 import { auth } from '../firebase'
 
@@ -35,7 +36,7 @@ export default function Login() {
   const [error, setError] = useState(null)
   const navigate = useNavigate()
 
-  const provider = new GoogleAuthProvider()
+  const providerGoogle = new GoogleAuthProvider()
 
   const handleChange = (prop) => (event) => {
     setValues((prevValues) => ({ ...prevValues, [prop]: event.target.value }))
@@ -58,7 +59,7 @@ export default function Login() {
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then((userCredential) => {
         // const user = userCredential.user
-        navigate('/profile')
+        navigate('/')
       })
       .catch((error) => {
         setError(
@@ -69,6 +70,13 @@ export default function Login() {
         )
       })
   }
+
+  //if successfull login with Google, redirect to homepage
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      navigate('/')
+    }
+  })
 
   return (
     <Container maxWidth="xs" sx={{ margin: '100px auto' }}>
@@ -128,7 +136,7 @@ export default function Login() {
             />
           </FormControl>
 
-          <Button
+          {/* <Button
             sx={{
               fontSize: '12px',
               alignSelf: 'end',
@@ -137,7 +145,7 @@ export default function Login() {
             }}
           >
             forgot password?
-          </Button>
+          </Button> */}
 
           <Button
             type="submit"
@@ -156,9 +164,8 @@ export default function Login() {
         <Box>
           <IconButton
             aria-label="login with Google"
-            size="small"
             color="inherit"
-            onClick={() => signInWithRedirect(auth, provider)}
+            onClick={() => signInWithRedirect(auth, providerGoogle)}
           >
             <GoogleIcon />
           </IconButton>

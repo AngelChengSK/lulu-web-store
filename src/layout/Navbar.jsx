@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -22,8 +22,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../images/word-logo.jpg'
 import { FavouriteContext } from '../store/favourites-context'
 import { SearchContext } from '../store/search-context'
+import UserMenu from '../components/UserMenu'
+import { AuthContext } from '../store/auth-context'
+import Backdrop from '../components/Backdrop'
 
 export default function Navbar({ totalItems }) {
+  const [showUserMenu, setShowUserMenu] = useState(false)
+  const { user } = useContext(AuthContext)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -46,6 +51,11 @@ export default function Navbar({ totalItems }) {
   //     </Slide>
   //   )
   // }
+
+  function handleUserBtn() {
+    if (user) setShowUserMenu(true)
+    else navigate('/login')
+  }
 
   return (
     <>
@@ -153,13 +163,18 @@ export default function Navbar({ totalItems }) {
           )}
 
           <IconButton
-            component={Link}
-            to="/profile"
-            aria-label="login"
+            // component={Link}
+            // to="/profile"
+            aria-label="user"
             color="inherit"
+            onClick={handleUserBtn}
           >
             <AccountCircleIcon sx={{ fontSize: '27px' }} />
           </IconButton>
+          {user && showUserMenu && <UserMenu />}
+          {user && showUserMenu && (
+            <Backdrop onClick={() => setShowUserMenu(false)} />
+          )}
 
           {location.pathname !== '/cart' && (
             <IconButton
