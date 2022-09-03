@@ -17,7 +17,7 @@ import ClearIcon from '@mui/icons-material/Clear'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { alpha } from '@mui/material/styles'
 import { grey } from '@mui/material/colors'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import logo from '../images/word-logo.jpg'
 import { FavouriteContext } from '../store/favourites-context'
@@ -29,7 +29,6 @@ import Backdrop from '../components/Backdrop'
 export default function Navbar({ totalItems }) {
   const [showUserMenu, setShowUserMenu] = useState(false)
   const { user } = useContext(AuthContext)
-  const location = useLocation()
   const navigate = useNavigate()
 
   const { favouriteItemsNumber } = useContext(FavouriteContext)
@@ -90,7 +89,7 @@ export default function Navbar({ totalItems }) {
           </Typography>
 
           <Box
-            sx={{
+            sx={(theme) => ({
               position: 'relative',
               borderRadius: '50px',
               backgroundColor: alpha(grey[400], 0.15),
@@ -98,8 +97,11 @@ export default function Navbar({ totalItems }) {
                 backgroundColor: alpha(grey[400], 0.2)
               },
               marginLeft: 'auto',
-              marginRight: '7px'
-            }}
+              marginRight: '7px',
+              [theme.breakpoints.down('sm')]: {
+                display: 'none'
+              }
+            })}
           >
             <Box
               sx={(theme) => ({
@@ -147,20 +149,33 @@ export default function Navbar({ totalItems }) {
             )}
           </Box>
 
-          {location.pathname !== '/favourite' && (
-            <IconButton
-              component={Link}
-              to="/favourite"
-              aria-label="Show favourite items"
-              color="inherit"
-            >
-              {favouriteItemsNumber > 0 ? (
-                <FavoriteIcon />
-              ) : (
-                <FavoriteBorderOutlinedIcon />
-              )}
-            </IconButton>
-          )}
+          <IconButton
+            component={Link}
+            to="/search"
+            color="inherit"
+            sx={(theme) => ({
+              marginLeft: 'auto',
+              marginRight: '7px',
+              [theme.breakpoints.up('sm')]: {
+                display: 'none'
+              }
+            })}
+          >
+            <SearchIcon />
+          </IconButton>
+
+          <IconButton
+            component={Link}
+            to="/favourite"
+            aria-label="Show favourite items"
+            color="inherit"
+          >
+            {favouriteItemsNumber > 0 ? (
+              <FavoriteIcon />
+            ) : (
+              <FavoriteBorderOutlinedIcon />
+            )}
+          </IconButton>
 
           <IconButton
             // component={Link}
@@ -171,25 +186,25 @@ export default function Navbar({ totalItems }) {
           >
             <AccountCircleIcon sx={{ fontSize: '27px' }} />
           </IconButton>
-          {user && showUserMenu && <UserMenu />}
-          {user && showUserMenu && (
-            <Backdrop onClick={() => setShowUserMenu(false)} />
-          )}
 
-          {location.pathname !== '/cart' && (
-            <IconButton
-              component={Link}
-              to="/cart"
-              aria-label="Show cart items"
-              color="inherit"
-            >
-              <Badge badgeContent={totalItems} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          )}
+          <IconButton
+            component={Link}
+            to="/cart"
+            aria-label="Show cart items"
+            color="inherit"
+          >
+            <Badge badgeContent={totalItems} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
+      {user && showUserMenu && (
+        <UserMenu onClick={() => setShowUserMenu(false)} />
+      )}
+      {user && showUserMenu && (
+        <Backdrop onClick={() => setShowUserMenu(false)} />
+      )}
       {/* </HideOnScroll> */}
     </>
   )

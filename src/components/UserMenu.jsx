@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../store/auth-context'
 
-export default function UserMenu() {
+export default function UserMenu({ onClick }) {
   const { user, handleLogout } = useContext(AuthContext)
 
   return (
@@ -32,6 +32,7 @@ export default function UserMenu() {
           color="primary"
           size="small"
           fullWidth
+          onClick={onClick}
         >
           Profile
         </Button>

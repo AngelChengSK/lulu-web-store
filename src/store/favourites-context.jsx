@@ -18,9 +18,7 @@ export default function FavouriteContextProvider(props) {
       retrievedList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
     }
 
-    if (retrievedList) {
-      setFavouriteList(retrievedList)
-    }
+    if (retrievedList) setFavouriteList(retrievedList)
   }, [user])
 
   useEffect(() => {

@@ -8,14 +8,8 @@ const LOCAL_STORAGE_KEY = 'lulu_cart_id'
 
 export default function ProductsContextProvider(props) {
   const [cart, setCart] = useState([])
-  const [newCartId, setNewCartId] = useState('')
   const { user } = useContext(AuthContext)
   const { handleSetDoc, getSingleUserData } = useContext(FirestoreContext)
-
-  // console.log(cart)
-  // useEffect(() => {
-  //   fetchCart()
-  // }, [])
 
   useEffect(() => {
     let retrievedCartId = null
@@ -23,7 +17,7 @@ export default function ProductsContextProvider(props) {
     if (user) {
       retrievedCartId = getSingleUserData(user.uid).cart_id
     } else {
-      retrievedCartId = JSON.parse(localStorage.getItem('lulu_cartId'))
+      retrievedCartId = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
     }
 
     if (retrievedCartId) fetchCart(retrievedCartId)
@@ -38,7 +32,7 @@ export default function ProductsContextProvider(props) {
 
         handleSetDoc(user.uid, newRecordObject)
       } else {
-        localStorage.setItem('lulu_cartId', JSON.stringify(cart.id))
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cart.id))
       }
     }
   }, [cart.id, user])

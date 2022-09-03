@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   Container,
@@ -18,7 +18,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 import { auth, db } from '../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { serverTimestamp, doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 
 export default function SignUp() {
   const [error, setError] = useState(null)

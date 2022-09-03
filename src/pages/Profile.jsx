@@ -2,17 +2,17 @@ import { useState, useContext, useEffect } from 'react'
 import { Card, Container, TextField, Button, Typography } from '@mui/material'
 import { AuthContext } from '../store/auth-context'
 import { FirestoreContext } from '../store/firestore-context'
-import { doc, setDoc, deleteDoc } from 'firebase/firestore'
+import { doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase'
-import { collection, getDocs } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
-import { TextFieldsTwoTone } from '@mui/icons-material'
+import Backdrop from '../components/Backdrop'
+import Modal from '../components/Modal'
 
 export default function Profile() {
-  const [loading, setLoading] = useState(true)
-  const [currentUserData, setCurrentUserData] = useState([])
+  const [currentUserData, setCurrentUserData] = useState(null)
   const [enableEdit, setEnableEdit] = useState(false)
-  const [values, setValues] = useState([])
+  const [showPopUp, setShowPopUp] = useState(false)
+  const [values, setValues] = useState(null)
   const { user, handleDeleteAuth } = useContext(AuthContext)
   const { getSingleUserData, handleSetDoc } = useContext(FirestoreContext)
   const navigate = useNavigate()
@@ -45,6 +45,14 @@ export default function Profile() {
     setCurrentUserData(targetRecord)
   }
 
+  function handleDeleteBtn() {
+    setShowPopUp(true)
+  }
+
+  function closePopUp() {
+    setShowPopUp(false)
+  }
+
   async function handleDeleteAccount() {
     await deleteDoc(doc(db, 'users', user.uid))
     setCurrentUserData([])
@@ -70,7 +78,7 @@ export default function Profile() {
     setValues((prevValues) => ({ ...prevValues, [id]: value }))
   }
 
-  if (currentUserData.length === 0 || values.length === 0) return
+  if (!currentUserData || !values) return
 
   return (
     <Container maxWidth="xs" sx={{ margin: '100px auto' }}>
@@ -150,13 +158,13 @@ export default function Profile() {
           </Button>
         )}
         {!enableEdit && (
-          <Button
-            variant="outlined"
-            color="error"
-            onClick={handleDeleteAccount}
-          >
+          <Button variant="outlined" color="error" onClick={handleDeleteBtn}>
             delete account
           </Button>
+        )}
+        {showPopUp && <Backdrop onClick={closePopUp} />}
+        {showPopUp && (
+          <Modal onCancel={closePopUp} onConfirm={handleDeleteAccount} />
         )}
       </Card>
     </Container>

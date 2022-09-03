@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 const StyledBackdrop = styled.div`
+  background-color: black;
+  opacity: 0.3;
   position: fixed;
   z-index: 1;
   width: 100%;
@@ -11,5 +13,4 @@ const StyledBackdrop = styled.div`
 
 export default function Backdrop({ onClick }) {
   return <StyledBackdrop onClick={onClick} />
-  // <div className="backdrop" onClick={props.onClick}></div>
 }
