@@ -60,12 +60,16 @@ export default function Search({ products }) {
         onChange={handleSearch}
       />
 
-      <Typography variant="h5" sx={{ mb: '30px' }}>
-        Search result(s) for "
-        <span style={{ fontWeight: 'bold' }}>{searchInput}</span>"
-      </Typography>
-      {searchResult.length > 0 ? renderResult() : renderEmptyResult()}
-      <Suggestion products={products} listToExculde={searchResult} />
+      {searchInput !== '' && (
+        <>
+          <Typography variant="h5" sx={{ mb: '30px' }}>
+            Search result(s) for "
+            <span style={{ fontWeight: 'bold' }}>{searchInput}</span>"
+          </Typography>
+          {searchResult.length > 0 ? renderResult() : renderEmptyResult()}
+          <Suggestion products={products} listToExculde={searchResult} />
+        </>
+      )}
     </Container>
   )
 }

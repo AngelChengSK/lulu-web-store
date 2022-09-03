@@ -2,9 +2,9 @@ import {
   Grid,
   Container,
   Card,
-  CardMedia
-  // Box,
-  // Typography
+  CardMedia,
+  Box,
+  Typography
 } from '@mui/material'
 import Product from '../components/Product'
 import { Splide, SplideSlide } from '@splidejs/react-splide'
@@ -16,6 +16,13 @@ import photo1 from '../images/gallery_1.jpg'
 import photo2 from '../images/gallery_2.jpg'
 
 export default function ProductsPage({ products }) {
+  const collectionProducts = products.filter(
+    (item) => item.categories.length > 0
+  )
+  const individualProducts = products.filter(
+    (item) => item.categories.length === 0
+  )
+
   return (
     <Container sx={{ margin: '120px auto' }}>
       <Splide
@@ -35,7 +42,7 @@ export default function ProductsPage({ products }) {
       >
         <SplideSlide>
           <Card
-            sx={{ width: '85%', margin: '0 auto 70px', borderRadius: '15px' }}
+            sx={{ width: '85%', margin: '0 auto 20px', borderRadius: '15px' }}
           >
             <CardMedia
               component="img"
@@ -51,7 +58,7 @@ export default function ProductsPage({ products }) {
         </SplideSlide>
         <SplideSlide>
           <Card
-            sx={{ width: '80%', margin: '0 auto 70px', borderRadius: '15px' }}
+            sx={{ width: '80%', margin: '0 auto 20px', borderRadius: '15px' }}
           >
             <CardMedia
               component="img"
@@ -66,8 +73,45 @@ export default function ProductsPage({ products }) {
           </Card>
         </SplideSlide>
       </Splide>
+      <Box>
+        <Typography
+          variant="h5"
+          sx={(theme) => ({
+            fontWeight: 'bold',
+            mt: '70px',
+            mb: '50px',
+            opacity: '0.7',
+            [theme.breakpoints.down('sm')]: {
+              mb: '20px'
+            }
+          })}
+        >
+          Lulu Collections
+        </Typography>
+        <Grid container justify="center" spacing={4}>
+          {collectionProducts.map((product) => (
+            <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+              <Product product={product} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+      <Typography
+        variant="h5"
+        sx={(theme) => ({
+          fontWeight: 'bold',
+          mt: '70px',
+          mb: '50px',
+          opacity: '0.7',
+          [theme.breakpoints.down('sm')]: {
+            mb: '20px'
+          }
+        })}
+      >
+        Lulu Figures
+      </Typography>
       <Grid container justify="center" spacing={4}>
-        {products.map((product) => (
+        {individualProducts.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
             <Product product={product} />
           </Grid>
