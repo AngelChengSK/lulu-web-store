@@ -11,7 +11,6 @@ import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
 import classes from './Products.module.css'
 
-// import logo from '../images/logo.jpg'
 import photo1 from '../images/gallery_1.jpg'
 import photo2 from '../images/gallery_2.jpg'
 
@@ -51,7 +50,6 @@ export default function ProductsPage({ products }) {
               alt="original series 2"
               sx={{
                 borderRadius: '15px'
-                // display: { lg: 'block', sm: 'none', xs: 'none' }
               }}
             />
           </Card>
@@ -67,7 +65,6 @@ export default function ProductsPage({ products }) {
               alt="journey to the west series"
               sx={{
                 borderRadius: '15px'
-                // display: { lg: 'block', sm: 'none', xs: 'none' }
               }}
             />
           </Card>
@@ -81,6 +78,7 @@ export default function ProductsPage({ products }) {
             mt: '70px',
             mb: '50px',
             opacity: '0.7',
+            textAlign: 'center',
             [theme.breakpoints.down('sm')]: {
               mb: '20px'
             }
@@ -90,7 +88,7 @@ export default function ProductsPage({ products }) {
         </Typography>
         <Grid container justify="center" spacing={4}>
           {collectionProducts.map((product) => (
-            <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+            <Grid item key={product.id} xs={12} sm={6} md={4}>
               <Product product={product} />
             </Grid>
           ))}
@@ -102,7 +100,9 @@ export default function ProductsPage({ products }) {
           fontWeight: 'bold',
           mt: '70px',
           mb: '50px',
+          pb: '20px',
           opacity: '0.7',
+          textAlign: 'center',
           [theme.breakpoints.down('sm')]: {
             mb: '20px'
           }

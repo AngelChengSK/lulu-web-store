@@ -22,7 +22,6 @@ import { doc, setDoc } from 'firebase/firestore'
 
 export default function SignUp() {
   const [error, setError] = useState(null)
-  // const navigate = useNavigate()
 
   const [values, setValues] = useState({
     email: '',

@@ -177,13 +177,7 @@ export default function Navbar({ totalItems }) {
             )}
           </IconButton>
 
-          <IconButton
-            // component={Link}
-            // to="/profile"
-            aria-label="user"
-            color="inherit"
-            onClick={handleUserBtn}
-          >
+          <IconButton aria-label="user" color="inherit" onClick={handleUserBtn}>
             <AccountCircleIcon sx={{ fontSize: '27px' }} />
           </IconButton>
 

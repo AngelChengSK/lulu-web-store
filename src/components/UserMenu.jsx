@@ -9,7 +9,7 @@ export default function UserMenu({ onClick }) {
   return (
     <Container
       sx={{
-        position: 'absolute',
+        position: 'fixed',
         top: '80px',
         right: 0,
         width: 'fit-content',

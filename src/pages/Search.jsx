@@ -1,23 +1,13 @@
 import { useContext } from 'react'
-import {
-  Grid,
-  Container,
-  Typography,
-  Box,
-  TextField,
-  IconButton
-} from '@mui/material'
-import ClearIcon from '@mui/icons-material/Clear'
+import { Grid, Container, Typography, Box, TextField } from '@mui/material'
 import { SearchContext } from '../store/search-context'
 import Product from '../components/Product'
 import Suggestion from '../components/Suggestion'
 
 export default function Search({ products }) {
-  const { searchInput, setSearchInput, handleClearSearch } =
-    useContext(SearchContext)
+  const { searchInput, setSearchInput } = useContext(SearchContext)
 
   const searchResult = products.filter((item) =>
-    // item.description.toLowerCase().includes(searchInput.toLowerCase()) ||
     item.name.toLowerCase().includes(searchInput.toLowerCase())
   )
 

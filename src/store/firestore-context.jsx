@@ -44,7 +44,6 @@ export default function FirestoreContextProvider(props) {
     getSingleUserData: getSingleUserData
   }
 
-  // if (!userMasterList) return
   if (loading) return
 
   return (

@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   Container,
@@ -23,11 +23,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   GoogleAuthProvider,
   signInWithRedirect,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
+  signInWithEmailAndPassword
 } from 'firebase/auth'
 import { auth } from '../firebase'
-import { doc, setDoc, deleteDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { AuthContext } from '../store/auth-context'
 
@@ -38,8 +37,7 @@ export default function Login() {
     showPassword: false
   })
   const [error, setError] = useState(null)
-  const navigate = useNavigate()
-  const { user, handleDeleteAuth } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   const providerGoogle = new GoogleAuthProvider()
 

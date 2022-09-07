@@ -56,7 +56,6 @@ export default function Product({ product }) {
           pl: '30px',
           pr: '30px',
           borderBottom: '1px solid lightgrey'
-          // height: '190px'
         }}
       >
         <Box>
@@ -70,12 +69,6 @@ export default function Product({ product }) {
             {product.price.formatted_with_symbol}
           </Typography>
         </Box>
-        {/* <Typography
-          dangerouslySetInnerHTML={{ __html: product.description }}
-          variant="body2"
-          color="textSecondary"
-          sx={{ lineHeight: 1.2, margin: 0 }}
-        /> */}
       </CardContent>
       <CardActions
         disableSpacing
